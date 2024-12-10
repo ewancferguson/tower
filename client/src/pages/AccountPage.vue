@@ -1,26 +1,25 @@
 <script setup>
-import { computed } from 'vue';
-import { AppState } from '../AppState.js';
+import { eventService } from '@/services/TowerEventService';
+import Pop from '@/utils/Pop';
+import { onMounted } from 'vue';
 
-const account = computed(() => AppState.account)
+onMounted(() => {
 
+})
+
+
+async function getEvents() {
+  try {
+    await eventService.getEvents()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 <template>
-  <div class="about text-center">
-    <div v-if="account">
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
-    </div>
-    <div v-else>
-      <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
-    </div>
-  </div>
+  <p></p>
 </template>
 
-<style scoped lang="scss">
-img {
-  max-width: 100px;
-}
-</style>
+<style scoped lang="scss"></style>
