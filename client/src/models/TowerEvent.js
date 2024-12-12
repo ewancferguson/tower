@@ -11,5 +11,6 @@ export class Event {
     this.isCanceled = data.isCanceled
     this.type = data.type
     this.creator = data.creator
+    this.ticketCount = data.ticketCount
   }
 }
