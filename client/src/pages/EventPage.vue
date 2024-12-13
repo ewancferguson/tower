@@ -14,6 +14,7 @@ const route = useRoute()
 const account = computed(() => AppState.account)
 const event = computed(() => AppState.activeEvent)
 const ticketProfiles = computed(() => AppState.ticketProfiles)
+// TODO use this to render some kind of html that says "You are attending!"
 const hasTicket = computed(() => ticketProfiles.value.some(ticketProfile => ticketProfile.accountId == account.value?.id))
 const comments = computed(() => AppState.comments)
 
@@ -98,6 +99,8 @@ async function getCommentsByEventId() {
           <h1>{{ event.name }}</h1>
           <span class="ms-2 p-2 rounded-pill bg-primary text-light">{{ event.type }}</span>
           <span v-if="event.isCanceled == true" class="ms-2 p-2 rounded-pill bg-danger text-light">Cancelled</span>
+          <span v-if="hasTicket == true" class="ms-2 p-2 rounded-pill border border-primary text-primary">Has
+            Ticket</span>
         </div>
         <p class="fs-4">{{ event.description }}</p>
         <h4>Date and Time</h4>
@@ -107,14 +110,16 @@ async function getCommentsByEventId() {
       </div>
       <div class="col-md-4">
         <section class="row mb-5">
-          <button v-if="event.creatorId == account.id" @click="cancelEvent" class="btn btn-outline-danger">{{
+          <button v-if="event.creatorId == account?.id" @click="cancelEvent" class="btn btn-outline-danger">{{
             event.isCanceled ? 'Remove Cancellation' :
-            'Cancel Event' }}</button>
+              'Cancel Event' }}</button>
         </section>
         <section class="row">
           <section class="col-md-6">
             <div v-if="account">
-              <button v-if="hasTicket || ticketProfiles.length >= event.capacity" class="btn btn-danger" disabled>
+              <!-- FIXME hide this button if the event is canceled! -->
+              <button v-if="event.isCanceled == true || ticketProfiles.length >= event.capacity" class="btn btn-danger"
+                disabled>
                 <i class="d-block mdi mdi-alpha-x"></i>
                 Unavailable
               </button>

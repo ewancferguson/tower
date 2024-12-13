@@ -3,8 +3,9 @@ import { eventService } from '@/services/TowerEventService';
 import Pop from '@/utils/Pop';
 import { Modal } from 'bootstrap';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter()
 
 const categories = ['concert', 'convention', 'digital', 'sport']
 
@@ -22,7 +23,11 @@ const editableEventData = ref({
 
 async function createEvent() {
   try {
-    await eventService.createEvent(editableEventData.value)
+    if (editableEventData.value.description == '') {
+
+      delete editableEventData.value.description
+    }
+    const event = await eventService.createEvent(editableEventData.value)
     editableEventData.value = {
       name: '',
       location: '',
@@ -33,7 +38,7 @@ async function createEvent() {
       description: '',
     }
     Modal.getInstance('#eventModal').hide()
-    Pop.success('Event Created!')
+    router.push({ name: 'Event', params: { eventId: event.id } })
   }
   catch (error) {
     Pop.error(error);

@@ -34,7 +34,7 @@ async function deleteComment(commentId) {
     <img class="comment-pfp" :src="commentProp.creator.picture" alt="">
     <h6>{{ commentProp.creator.name }}</h6>
     <p>{{ commentProp.body }}</p>
-    <span @click="deleteComment(commentProp.id)" v-if="account.id == commentProp.creator.id"
+    <span @click="deleteComment(commentProp.id)" v-if="account?.id == commentProp.creator.id"
       class="selectable mdi mdi-delete text-danger"></span>
   </div>
 </template>
