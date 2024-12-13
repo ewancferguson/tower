@@ -1,6 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState';
 import CommentForm from '@/components/CommentForm.vue';
+import CommentList from '@/components/CommentList.vue';
+import { commentService } from '@/services/CommentServices';
 import { ticketService } from '@/services/TicketService';
 import { eventService } from '@/services/TowerEventService';
 import Pop from '@/utils/Pop';
@@ -13,11 +15,13 @@ const account = computed(() => AppState.account)
 const event = computed(() => AppState.activeEvent)
 const ticketProfiles = computed(() => AppState.ticketProfiles)
 const hasTicket = computed(() => ticketProfiles.value.some(ticketProfile => ticketProfile.accountId == account.value?.id))
+const comments = computed(() => AppState.comments)
 
 
 onMounted(() => {
   getEventById()
   getTicketProfiles()
+  getCommentsByEventId()
 })
 
 
@@ -68,6 +72,17 @@ async function createTicket() {
   }
 }
 
+
+async function getCommentsByEventId() {
+  try {
+    const eventId = route.params.eventId
+    await commentService.getCommentsByEventId(eventId)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
 </script>
 
 <template>
@@ -92,15 +107,16 @@ async function createTicket() {
       </div>
       <div class="col-md-4">
         <section class="row mb-5">
-          <button @click="cancelEvent" class="btn btn-outline-danger">{{ event.isCanceled ? 'Remove Cancellation' :
+          <button v-if="event.creatorId == account.id" @click="cancelEvent" class="btn btn-outline-danger">{{
+            event.isCanceled ? 'Remove Cancellation' :
             'Cancel Event' }}</button>
         </section>
         <section class="row">
           <section class="col-md-6">
             <div v-if="account">
-              <button v-if="hasTicket" class="btn btn-danger" disabled>
-                <i class="d-block mdi mdi-heart"></i>
-                Attending
+              <button v-if="hasTicket || ticketProfiles.length >= event.capacity" class="btn btn-danger" disabled>
+                <i class="d-block mdi mdi-alpha-x"></i>
+                Unavailable
               </button>
               <button v-else @click="createTicket()" class="btn btn-primary">
                 <i class="d-block mdi mdi-account-plus"></i>
@@ -124,6 +140,9 @@ async function createTicket() {
   </div>
   <div class="container">
     <CommentForm />
+    <section v-for="comment in comments" :key="comment.id" class="row bg-light border rounded shadow p-3 my-3">
+      <CommentList :comment-prop="comment" />
+    </section>
   </div>
 </template>
 

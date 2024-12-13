@@ -13,7 +13,7 @@ class TowerEventService {
     const response = await api.post('api/events', eventData)
     logger.log(response.data)
     const event = new Event(response.data)
-    AppState.events.unshift(event)
+    AppState.events.push(event)
   }
   async getEventById(eventId) {
     const response = await api.get(`api/events/${eventId}`)
