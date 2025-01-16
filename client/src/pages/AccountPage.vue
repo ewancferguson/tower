@@ -4,6 +4,7 @@ import { AppState } from '../AppState.js';
 import { ticketService } from '@/services/TicketService.js';
 import Pop from '@/utils/Pop.js';
 import EventCard from '@/components/EventCard.vue';
+import AccountCard from '@/components/AccountCard.vue';
 
 const account = computed(() => AppState.account);
 const tickets = computed(() => AppState.tickets);
@@ -45,11 +46,8 @@ async function deleteTicket(ticketId) {
 
     <section class="tickets row mt-4">
       <h2 class="col-12 text-center animate-fade-in">Your Tickets</h2>
-      <div v-for="ticket in tickets" :key="ticket.id" class="ticket-card col-md-3 animate-slide-up">
-        <EventCard :event-prop="ticket.event" />
-        <button @click="deleteTicket(ticket.id)" class="btn btn-danger w-100 mt-2">
-          Stop Attending
-        </button>
+      <div v-for="ticket in tickets" :key="ticket.id" class="col-md-3">
+        <AccountCard :event-prop="ticket" />
       </div>
     </section>
   </div>

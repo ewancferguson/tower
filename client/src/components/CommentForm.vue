@@ -32,7 +32,7 @@ async function createComment() {
       <label for="body" class="form-label">Leave a comment!</label>
       <textarea v-model="editableCommentData.body" class="form-control" id="body" rows="3"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Post<span class="mdi mdi-plus"></span></button>
+    <button type="submit" class="btn btn-primary mb-3">Post<span class="mdi mdi-plus"></span></button>
   </form>
 </template>
 
