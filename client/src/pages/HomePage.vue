@@ -35,10 +35,25 @@ async function getEvents() {
 
 <template>
   <div class="container">
-    <div class="row justify-content-end mb-3">
+    <div class="row mb-3">
+      <h2 class="text-center mt-4">Welcome To Tower</h2>
+      <h6 class="text-center mb-4">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+        piece
+        of classical Latin
+        literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+        College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+        going through the cites of the word in classical literature, discovered the undoubtable source. </h6>
       <div class="col">
-        <button data-bs-toggle="modal" data-bs-target="#eventModal" class="btn btn-primary rounded">Create
-          Event</button>
+        <section class="row justify-content-between">
+          <div class="col-md-3">
+            <button data-bs-toggle="modal" data-bs-target="#eventModal"
+              class="btn btn-success text-light rounded">Create
+              Event</button>
+          </div>
+          <div @click="getEvents()" class="col-md-2 text-center rounded-pill bg-warning text-light selectable shadow">
+            <p>All Events</p>
+          </div>
+        </section>
       </div>
     </div>
     <section class="row justify-content-between">

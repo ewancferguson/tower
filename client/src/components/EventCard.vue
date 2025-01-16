@@ -19,33 +19,77 @@ defineProps({
 </script>
 
 <template>
-  <div class="card mb-3" style="width: 18rem;">
-    <router-link :to="{ name: 'Event', params: { eventId: eventProp.id } }">
+  <div class="card mb-3 event-card" style="width: 18rem;">
+    <router-link :to="{ name: 'Event', params: { eventId: eventProp.id } }" class="card-link">
       <div>
-        <img :src="eventProp.coverImg" class=" card-img-top card-img" alt="...">
+        <img :src="eventProp.coverImg" class="card-img-top card-img" alt="Event cover image">
       </div>
     </router-link>
     <div class="card-body">
-      <h5>{{ eventProp.name }}</h5>
-      <p>{{ eventProp.location }}</p>
-      <p>{{ eventProp.startDate.toLocaleString() }}</p>
-      <div class="d-flex justify-content-end align-items-center">
-        <span v-if="eventProp.creator">{{ eventProp.creator?.name }}</span><img v-if="eventProp.creator"
-          class="profile-pic ms-3" :src="eventProp.creator?.picture" alt="">
+      <h5 class="card-title">{{ eventProp.name }}</h5>
+      <p class="card-text">{{ eventProp.location }}</p>
+      <p class="card-date">{{ eventProp.startDate.toLocaleString() }}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <span v-if="eventProp.creator" class="creator-name">{{ eventProp.creator?.name }}</span>
+        <img v-if="eventProp.creator" class="profile-pic" :src="eventProp.creator?.picture" alt="Creator picture">
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.event-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-link {
+  text-decoration: none;
+}
+
 .card-img {
   height: 12rem;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-img:hover {
+  transform: scale(1.05);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-text {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.card-date {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.creator-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .profile-pic {
-  height: 3rem;
-  aspect-ratio: 1/1;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   object-fit: cover;
 }
