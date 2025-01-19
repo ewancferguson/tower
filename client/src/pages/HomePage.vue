@@ -60,7 +60,6 @@ async function getEvents() {
         <EventCard :event-prop="event" />
       </div>
     </section>
-    <p></p>
   </div>
 </template>
 
