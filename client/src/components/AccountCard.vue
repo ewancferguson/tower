@@ -23,7 +23,7 @@ async function deleteTicket(ticketId) {
 
 <template>
   <div class="card mb-3 event-card" style="width: 18rem;">
-    <router-link :to="{ name: 'Event', params: { eventId: eventProp.id } }" class="card-link">
+    <router-link :to="{ name: 'Event', params: { eventId: eventProp.event.id } }" class="card-link">
       <div>
         <img :src="eventProp.event.coverImg" class="card-img-top card-img" alt="Event cover image">
       </div>
