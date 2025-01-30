@@ -13,7 +13,7 @@ const events = computed(() => {
   if (activeFilterCategory.value == 'all') return AppState.events
   return AppState.events.filter(event => event.type == activeFilterCategory.value)
 })
-
+const account = computed(() => AppState.account)
 onMounted(() => {
   getEvents()
 })
@@ -37,7 +37,7 @@ async function getEvents() {
         College in Virginia, discovered the undoubtable source of Lorem Ipsum through a passage in classical literature.
       </p>
       <div class="d-flex justify-content-center gap-3">
-        <button data-bs-toggle="modal" data-bs-target="#eventModal"
+        <button v-if="account" data-bs-toggle="modal" data-bs-target="#eventModal"
           class="btn btn-success text-light rounded-pill px-4">
           Create Event
         </button>
