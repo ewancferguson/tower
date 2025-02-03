@@ -19,7 +19,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="card mb-3 event-card" style="width: 18rem;">
+  <div class="card mb-3 event-card" style="width: 20rem;">
     <router-link :to="{ name: 'Event', params: { eventId: eventProp.id } }" class="card-link">
       <div>
         <img :src="eventProp.coverImg" class="card-img-top card-img" alt="Event cover image">
