@@ -56,7 +56,7 @@ async function getEvents() {
 
     <section class="row">
       <h2 class="fw-bold text-center mb-4">Browse Events</h2>
-      <div v-for="event in events" :key="event.id" class="col-md-3 mb-4">
+      <div v-for="event in events" :key="event.id" class="col-md-4 mb-4">
         <EventCard :event-prop="event" />
       </div>
     </section>
