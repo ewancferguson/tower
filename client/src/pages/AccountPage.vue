@@ -35,18 +35,22 @@ async function deleteTicket(ticketId) {
 
 <template>
   <div v-if="account" class="container">
+    <!-- Profile Section -->
     <section class="profile row mt-5">
-      <div class="col-md-3 text-center">
+      <div class="col-12 col-md-3 text-center">
         <img class="pfp" :src="account.picture" alt="Profile Picture" />
       </div>
-      <div class="col d-flex align-items-center">
+      <div class="col-12 col-md-9 d-flex align-items-center justify-content-center justify-content-md-start">
         <h1 class="animate-fade-in">{{ account.name }}</h1>
       </div>
     </section>
 
+    <!-- Tickets Section -->
     <section class="tickets row mt-4">
-      <h2 class="col-12 text-center animate-fade-in">Your Tickets</h2>
-      <div v-for="ticket in tickets" :key="ticket.id" class="col-md-3">
+      <h2 class="col-12 text-center animate-fade-in mb-4">Your Tickets</h2>
+      <!-- Ticket Cards -->
+      <div v-for="ticket in tickets" :key="ticket.id"
+        class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-4">
         <AccountCard :event-prop="ticket" />
       </div>
     </section>
@@ -137,5 +141,56 @@ h2 {
 
 .animate-slide-down {
   animation: slide-down 0.8s ease;
+}
+
+/* Mobile and Tablet Styling */
+@media (max-width: 768px) {
+  .profile {
+    text-align: center;
+  }
+
+  .pfp {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .tickets {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* Ensure that the cards are centered */
+  }
+
+  .tickets .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .ticket-card {
+    margin-bottom: 1rem;
+  }
+
+  /* Adjust ticket cards layout on mobile */
+  .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Tablet Layout */
+@media (max-width: 992px) {
+  .tickets .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* Larger Screen (Desktop) Layout */
+@media (min-width: 1200px) {
+  .tickets .col-md-4 {
+    flex: 0 0 33%;
+    max-width: 33%;
+  }
 }
 </style>

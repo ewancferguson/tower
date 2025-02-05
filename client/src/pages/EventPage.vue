@@ -14,18 +14,14 @@ const route = useRoute()
 const account = computed(() => AppState.account)
 const event = computed(() => AppState.activeEvent)
 const ticketProfiles = computed(() => AppState.ticketProfiles)
-// TODO use this to render some kind of html that says "You are attending!"
 const hasTicket = computed(() => ticketProfiles.value.some(ticketProfile => ticketProfile.accountId == account.value?.id))
 const comments = computed(() => AppState.comments)
-
 
 onMounted(() => {
   getEventById()
   getTicketProfiles()
   getCommentsByEventId()
 })
-
-
 
 async function getEventById() {
   try {
@@ -46,8 +42,6 @@ async function getTicketProfiles() {
     Pop.error(error);
   }
 }
-
-
 
 async function cancelEvent() {
   try {
@@ -73,7 +67,6 @@ async function createTicket() {
   }
 }
 
-
 async function getCommentsByEventId() {
   try {
     const eventId = route.params.eventId
@@ -83,67 +76,69 @@ async function getCommentsByEventId() {
     Pop.error(error);
   }
 }
-
 </script>
 
 <template>
   <div v-if="event" class="container">
     <section class="row mt-5">
       <div class="col-12">
-        <img class="shadow cover-img rounded" :src="event.coverImg" alt="">
+        <img class="shadow cover-img rounded" :src="event.coverImg" alt="Event Cover Image" />
       </div>
     </section>
-    <section class="row mt-5">
-      <div class="col-md-7">
+
+    <section class="row mt-4">
+      <div class="col-12 col-md-7">
         <div class="mb-3 d-flex align-items-center">
-          <h1>{{ event.name }}</h1>
+          <h1 class="h3">{{ event.name }}</h1>
           <span class="ms-2 p-2 rounded-pill bg-primary text-light">{{ event.type }}</span>
-          <span v-if="event.isCanceled == true" class="ms-2 p-2 rounded-pill bg-danger text-light">Cancelled</span>
-          <span v-if="hasTicket == true" class="ms-2 p-2 rounded-pill border border-primary text-primary">Has
-            Ticket</span>
+          <span v-if="event.isCanceled" class="ms-2 p-2 rounded-pill bg-danger text-light">Cancelled</span>
+          <span v-if="hasTicket" class="ms-2 p-2 rounded-pill border border-primary text-primary">Has Ticket</span>
         </div>
-        <p class="fs-4">{{ event.description }}</p>
-        <h4>Date and Time</h4>
-        <p class="fs-4"><span class="mdi mdi-calendar-clock"></span> {{ event.startDate.toLocaleString() }}</p>
+        <p class="fs-5">{{ event.description }}</p>
+        <h4 class="mt-3">Date and Time</h4>
+        <p class="fs-5"><span class="mdi mdi-calendar-clock"></span> {{ event.startDate.toLocaleString() }}</p>
         <h4>Location</h4>
-        <p class="fs-4"><span class="mdi mdi-map-marker"></span> {{ event.location }}</p>
+        <p class="fs-5"><span class="mdi mdi-map-marker"></span> {{ event.location }}</p>
       </div>
-      <div class="col-md-4">
-        <section class="row mb-5">
-          <button v-if="event.creatorId == account?.id" @click="cancelEvent" class="btn btn-outline-danger">{{
-            event.isCanceled ? 'Remove Cancellation' :
-              'Cancel Event' }}</button>
+
+      <div class="col-12 col-md-4 mt-4 mt-md-0">
+        <section class="row mb-4">
+          <button v-if="event.creatorId == account?.id" @click="cancelEvent" class="btn btn-outline-danger w-100">
+            {{ event.isCanceled ? 'Remove Cancellation' : 'Cancel Event' }}
+          </button>
         </section>
+
         <section class="row">
-          <section class="col-md-6">
+          <div class="col-6">
             <div v-if="account">
-              <!-- FIXME hide this button if the event is canceled! -->
-              <button v-if="event.isCanceled == true || ticketProfiles.length >= event.capacity" class="btn btn-danger"
+              <button v-if="event.isCanceled || ticketProfiles.length >= event.capacity" class="btn btn-danger w-100"
                 disabled>
                 <i class="d-block mdi mdi-alpha-x"></i>
                 Unavailable
               </button>
-              <button v-else @click="createTicket()" class="btn btn-primary">
+              <button v-else @click="createTicket()" class="btn btn-primary w-100">
                 <i class="d-block mdi mdi-account-plus"></i>
                 Grab Ticket
               </button>
             </div>
-          </section>
-          <div class="col-md-6">
+          </div>
+          <div class="col-6">
             <h3>{{ ticketProfiles.length }}/{{ event.capacity }}<span class="mdi mdi-account"></span></h3>
           </div>
-          <h3 class="mt-2">
-            Attending
-          </h3>
-          <div v-for="ticketProfile in ticketProfiles" :key="ticketProfile.id" class="col-4 mt-3">
-            <img :src="ticketProfile.profile.picture" :title="ticketProfile.profile.name"
-              :alt="ticketProfile.profile.name" class="img-fluid rounded">
+
+          <h3 class="mt-2">Attending</h3>
+          <div class="row">
+            <div v-for="ticketProfile in ticketProfiles" :key="ticketProfile.id" class="col-4 mt-3">
+              <img :src="ticketProfile.profile.picture" :title="ticketProfile.profile.name"
+                :alt="ticketProfile.profile.name" class="img-fluid rounded" />
+            </div>
           </div>
         </section>
       </div>
     </section>
   </div>
-  <div class="container">
+
+  <div class="container mt-5">
     <CommentForm />
     <section v-for="comment in comments" :key="comment.id" class="row bg-light border rounded shadow p-3 my-3">
       <CommentList :comment-prop="comment" />
@@ -156,5 +151,38 @@ async function getCommentsByEventId() {
   height: 25rem;
   width: 100%;
   object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .cover-img {
+    height: 18rem;
+  }
+
+  .fs-5 {
+    font-size: 1rem;
+  }
+
+  .h3 {
+    font-size: 1.5rem;
+  }
+
+  .col-md-7,
+  .col-md-4 {
+    margin-bottom: 2rem;
+  }
+
+  .row {
+    margin-top: 2rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-4 {
+    width: 25%;
+  }
 }
 </style>

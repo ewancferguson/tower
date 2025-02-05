@@ -41,22 +41,24 @@ async function getEvents() {
           class="btn btn-success text-light rounded-pill px-4">
           Create Event
         </button>
-        <div @click="getEvents()" class="rounded-pill bg-warning text-light cursor-pointer shadow px-4 py-2">
-          <p class="mb-0">All Events</p>
-        </div>
       </div>
     </div>
 
-    <section class="row justify-content-center mb-4">
-      <div v-for="category in categories" :key="category" @click="activeFilterCategory = category"
-        class="text-capitalize col-md-2 text-center rounded-pill bg-primary text-light cursor-pointer shadow py-2 mb-3">
-        <p class="mb-0">{{ category }}</p>
-      </div>
+
+    <!-- Sorting Section -->
+    <section class="d-flex justify-content-center gap-3 mb-4">
+      <button @click="activeFilterCategory = 'all'" class="sort-button">All Events</button>
+      <button v-for="category in categories" :key="category" @click="activeFilterCategory = category"
+        class="sort-button">
+        {{ category }}
+      </button>
     </section>
 
-    <section class="row">
-      <h2 class="fw-bold text-center mb-4">Browse Events</h2>
-      <div v-for="event in events" :key="event.id" class="col-md-4 mb-4">
+    <!-- Events Display Section -->
+    <section class="row justify-content-center">
+      <h2 class="fw-bold text-center mb-4 w-100">Browse Events</h2>
+      <div v-for="event in events" :key="event.id"
+        class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-4">
         <EventCard :event-prop="event" />
       </div>
     </section>
@@ -70,5 +72,80 @@ async function getEvents() {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.category-button {
+  background-color: #6c757d;
+  color: white;
+  transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.category-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+.sort-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition: background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.sort-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.sort-button:focus {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .category-button {
+    flex: 0 0 45%;
+    /* Adjust width for categories on smaller screens */
+  }
+
+  .col-md-2 {
+    flex: 0 0 50%;
+    /* Adjust filter button size for smaller screens */
+  }
+
+  .col-md-4 {
+    flex: 0 0 100%;
+    /* Full width for event cards on small screens */
+  }
+
+  .col-sm-6 {
+    flex: 0 0 50%;
+    /* Two items per row on small screens */
+  }
+
+  .col-lg-3 {
+    flex: 0 0 50%;
+    /* Adjust event card layout for larger screens */
+  }
+
+  .rounded-pill {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem;
+    /* Adjust bottom margin */
+  }
+}
+
+@media (max-width: 576px) {
+  .col-4 {
+    flex: 0 0 100%;
+    /* Category filter buttons stack on very small screens */
+  }
 }
 </style>
