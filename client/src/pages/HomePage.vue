@@ -44,9 +44,7 @@ async function getEvents() {
       </div>
     </div>
 
-
-    <!-- Sorting Section -->
-    <section class="d-flex justify-content-center gap-3 mb-4">
+    <section class="d-flex flex-wrap justify-content-center gap-2 gap-md-3 mb-4">
       <button @click="activeFilterCategory = 'all'" class="sort-button">All Events</button>
       <button v-for="category in categories" :key="category" @click="activeFilterCategory = category"
         class="sort-button">
@@ -54,7 +52,6 @@ async function getEvents() {
       </button>
     </section>
 
-    <!-- Events Display Section -->
     <section class="row justify-content-center">
       <h2 class="fw-bold text-center mb-4 w-100">Browse Events</h2>
       <div v-for="event in events" :key="event.id"
@@ -68,6 +65,7 @@ async function getEvents() {
 <style scoped lang="scss">
 .container {
   max-width: 1200px;
+  padding: 0 15px;
 }
 
 .cursor-pointer {
@@ -89,16 +87,17 @@ async function getEvents() {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 30px;
   font-weight: bold;
   text-transform: capitalize;
   transition: background-color 0.3s, transform 0.3s ease-in-out;
+  font-size: 1rem;
 }
 
 .sort-button:hover {
   background-color: #0056b3;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .sort-button:focus {
@@ -108,44 +107,36 @@ async function getEvents() {
 @media (max-width: 768px) {
   .category-button {
     flex: 0 0 45%;
-    /* Adjust width for categories on smaller screens */
   }
 
-  .col-md-2 {
-    flex: 0 0 50%;
-    /* Adjust filter button size for smaller screens */
-  }
-
-  .col-md-4 {
-    flex: 0 0 100%;
-    /* Full width for event cards on small screens */
+  .sort-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
   }
 
   .col-sm-6 {
     flex: 0 0 50%;
-    /* Two items per row on small screens */
-  }
-
-  .col-lg-3 {
-    flex: 0 0 50%;
-    /* Adjust event card layout for larger screens */
-  }
-
-  .rounded-pill {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .mb-4 {
-    margin-bottom: 1.5rem;
-    /* Adjust bottom margin */
   }
 }
 
 @media (max-width: 576px) {
-  .col-4 {
+  .sort-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .col-12 {
     flex: 0 0 100%;
-    /* Category filter buttons stack on very small screens */
+  }
+
+  .rounded-pill {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem;
   }
 }
 </style>
