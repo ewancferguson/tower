@@ -49,12 +49,6 @@ Once the app is running, visit the following URLs:
 
 
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## Acknowledgments
 
 - **Vue.js** for building a reactive, flexible, and fast frontend.
