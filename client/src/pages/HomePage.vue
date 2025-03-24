@@ -5,14 +5,22 @@ import { eventService } from '@/services/TowerEventService';
 import Pop from '@/utils/Pop';
 import { computed, onMounted, ref } from 'vue';
 
-const activeFilterCategory = ref('all')
-
-const categories = ['concert', 'convention', 'digital', 'sport']
-
 const events = computed(() => {
   if (activeFilterCategory.value == 'all') return AppState.events
-  return AppState.events.filter(event => event.type == activeFilterCategory.value)
+  return AppState.events.filter(events => events.type == activeFilterCategory.value)
 })
+
+
+
+const activeFilterCategory = ref('all')
+
+const categories = [
+  { name: 'all' },
+  { name: 'concert' },
+  { name: 'convention' },
+  { name: 'sport' },
+  { name: 'digital' },
+]
 const account = computed(() => AppState.account)
 onMounted(() => {
   getEvents()
@@ -44,19 +52,41 @@ async function getEvents() {
   </div>
   <div class="container my-5">
 
-
-    <section class="d-flex flex-wrap justify-content-center gap-2 gap-md-3 mb-4">
-      <button @click="activeFilterCategory = 'all'" class="sort-button">All Events</button>
-      <button v-for="category in categories" :key="category" @click="activeFilterCategory = category"
-        class="sort-button">
-        {{ category }}
-      </button>
+    <h2 class="ubuntu-regular">How Tower Works</h2>
+    <section class="row justify-content-evenly">
+      <div class="col-md-4 p-3">
+        <h3><i class="mdi mdi-magnify text-success"></i> Discover events you're interested in</h3>
+        <p>Browse through community hosted events for all the things you love</p>
+      </div>
+      <div class="col-md-4 p-3 ">
+        <h3> <i class="mdi mdi-plus text-success "></i> Start an event to invite your friends</h3>
+        <p>Create your own Tower Event, and draw from a community of millions</p>
+      </div>
     </section>
 
+    <section class="row align-items-center">
+      <div class="col-12">
+        <div class="row justify-content-evenly p-3">
+          <div @click="activeFilterCategory = category.name" role="button" v-for="category in categories"
+            :key="category.name" class="col-md-2 col-4 my-1 text-center mx-2 p-1 kanit-medium">
+            <div class="text-capitalize categoryBox p-md-3 p-1">
+              <div v-if="category.name == 'all'"><i class="mdi mdi-infinity fs-3"></i></div>
+              <div v-if="category.name == 'concert'"><i class="mdi mdi-guitar-electric fs-3"></i></div>
+              <div v-if="category.name == 'convention'"><i class="mdi mdi-account-group fs-3"></i></div>
+              <div v-if="category.name == 'sport'"><i class="mdi mdi-soccer fs-3"></i></div>
+              <div v-if="category.name == 'digital'"><i class="mdi mdi-television fs-3"></i></div>
+              <div class="fs-md-5">{{ category.name }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <h2 class="fw-bold mb-4 w-100">Browse Events</h2>
     <section class="row justify-content-center">
-      <h2 class="fw-bold text-center mb-4 w-100">Browse Events</h2>
       <div v-for="event in events" :key="event.id"
-        class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center mb-4">
+        class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex justify-content-center mb-4">
         <EventCard :event-prop="event" />
       </div>
     </section>
@@ -153,5 +183,15 @@ async function getEvents() {
   .mb-4 {
     margin-bottom: 1rem;
   }
+}
+
+.categoryBox {
+  background-color: #F8F6FF;
+  transition: 0.2s ease-in-out;
+}
+
+.categoryBox:hover {
+  background-color: #ceccd4;
+  transform: scale(1.1);
 }
 </style>

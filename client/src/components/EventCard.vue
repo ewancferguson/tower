@@ -19,10 +19,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="card mb-3 event-card" style="width: 20rem;">
+  <div class="mb-3 event-card" style="width: 20rem;">
     <router-link :to="{ name: 'Event', params: { eventId: eventProp.id } }" class="card-link">
       <div>
-        <img :src="eventProp.coverImg" class="card-img-top card-img" alt="Event cover image">
+        <img :src="eventProp.coverImg" class="card-img-top card-img mb-3" alt="Event cover image">
       </div>
     </router-link>
     <div class="card-body">
@@ -38,19 +38,6 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
-.event-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-}
-
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
 .card-link {
   text-decoration: none;
 }
