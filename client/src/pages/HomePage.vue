@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState';
 import EventCard from '@/components/EventCard.vue';
+import ModalWrapper from '@/components/ModalWrapper.vue';
 import { eventService } from '@/services/TowerEventService';
 import Pop from '@/utils/Pop';
 import { computed, onMounted, ref } from 'vue';
@@ -58,8 +59,17 @@ async function getEvents() {
         <h3><i class="mdi mdi-magnify text-success"></i> Discover events you're interested in</h3>
         <p>Browse through community hosted events for all the things you love</p>
       </div>
-      <div class="col-md-4 p-3 ">
-        <h3> <i class="mdi mdi-plus text-success "></i> Start an event to invite your friends</h3>
+
+      <div v-if="account" class="col-md-4 p-3" data-bs-toggle="modal" data-bs-target="#eventModal">
+        <h3>
+          <i class="mdi mdi-plus text-success selectable"></i> Start an event to invite your friends
+        </h3>
+        <p>Create your own Tower Event, and draw from a community of millions</p>
+      </div>
+      <div v-else class="col-md-4 p-3">
+        <h3>
+          <i class="mdi mdi-plus text-success"></i> Start an event to invite your friends
+        </h3>
         <p>Create your own Tower Event, and draw from a community of millions</p>
       </div>
     </section>
@@ -91,6 +101,7 @@ async function getEvents() {
       </div>
     </section>
   </div>
+  <ModalWrapper />
 </template>
 
 <style scoped lang="scss">
