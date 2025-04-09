@@ -168,7 +168,13 @@ async function getCommentsByEventId() {
   </div>
 
   <div class="container mt-5">
-    <CommentForm />
+
+    <div v-if="account">
+      <CommentForm />
+    </div>
+    <div v-else>
+      <h5 class="text-center">Please log in to leave a comment.</h5>
+    </div>
     <section v-for="comment in comments" :key="comment.id" class="row bg-light border rounded shadow p-3 my-3">
       <CommentList :comment-prop="comment" />
     </section>
