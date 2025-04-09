@@ -10,10 +10,10 @@
   Secure user authentication with sign-up, login, and session management.
 
 - **Event Management**  
-  Admins can create, edit, and delete events with detailed information (date, time, location, etc.).
+  Users can create events with detailed information (date, time, location, etc.).
 
 - **Dynamic Ticket Booking**  
-  Users can view upcoming events, select tickets, and book them dynamically with real-time updates.
+  Users can view upcoming events, select tickets, and see what events they have tickets for.
 
 - **Real-time Ticket Availability**  
   Seat availability is updated dynamically, ensuring accurate ticket counts and avoiding double bookings.
