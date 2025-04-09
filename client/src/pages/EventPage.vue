@@ -123,7 +123,7 @@ async function getCommentsByEventId() {
         </section>
 
         <section class="row justify-content-center">
-          <div class="btn-table rounded w-100">
+          <div v-if="account" class="btn-table rounded w-100">
             <div class="p-3" v-if="account">
               <h5 class="text-center">Grab a ticket before this event sells out!</h5>
               <p class="text-center">
