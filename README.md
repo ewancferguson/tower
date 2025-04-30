@@ -31,7 +31,7 @@
 - **Frontend:** Vue.js
 - **Backend:** Node.js (Express)
 - **Database:** MongoDB (Mongoose)
-- **Authentication:** JWT (JSON Web Tokens)
+- **Authentication:** Auth0
 
 ---
 
