@@ -42,7 +42,7 @@ Once the app is running, visit the following URLs:
 - **Frontend (Client)**: `http://localhost:8080`
   - Browse events, book tickets, and view ticket history.
 
-- **Backend (API)**: `http://localhost:5000/api`
+- **Backend (API)**: `http://localhost:3000/api`
   - The backend provides APIs for managing users, events, and tickets. You can integrate this API into your front-end application.
 
 ---
